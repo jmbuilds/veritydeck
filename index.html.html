@@ -1,0 +1,459 @@
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--n:#060D1A;--b:#0A4B8F;--c:#00D4FF;--t:#00A896;--l:#4FC3F7;--w:#FFFFFF;--o:#E8F4FD;--m:#7BAFD4;--d:#1A2D45;--d2:#2A3F5A;--cd:rgba(10,75,143,0.18);--cb:rgba(0,212,255,0.15);--cs:rgba(0,212,255,0.45);}
+*{box-sizing:border-box;margin:0;padding:0;}
+.deck{font-family:'Space Grotesk',system-ui,sans-serif;background:var(--n);color:var(--w);width:100%;}
+.slide{display:none;min-height:520px;padding:40px 50px 28px;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;}
+.slide.active{display:flex;}
+.slide::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,255,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.022) 1px,transparent 1px);background-size:52px 52px;pointer-events:none;}
+.bar{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--b),var(--c),var(--t));}
+.mono{font-family:'JetBrains Mono',monospace;}
+.ey{font-size:10px;font-weight:600;letter-spacing:0.16em;color:var(--c);text-transform:uppercase;margin-bottom:11px;}
+h2.st{font-size:25px;font-weight:700;line-height:1.2;margin-bottom:13px;}
+.sub{font-size:14px;color:var(--m);line-height:1.65;max-width:580px;}
+.cy{color:var(--c);}.te{color:var(--t);}.mu{color:var(--m);}
+.card{background:var(--cd);border:0.5px solid var(--cb);border-radius:10px;padding:16px 18px;}
+.cardt{background:rgba(0,168,150,0.1);border:0.5px solid rgba(0,168,150,0.3);border-radius:10px;padding:16px 18px;}
+.cardc{background:rgba(0,212,255,0.05);border:1px solid var(--cs);border-radius:10px;padding:16px 18px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;}
+.g21{display:grid;grid-template-columns:2fr 1fr;gap:16px;}
+.sv{font-size:32px;font-weight:700;color:var(--c);line-height:1;}
+.sl{font-size:11px;color:var(--m);margin-top:3px;line-height:1.4;}
+.pill{display:inline-block;background:rgba(0,212,255,0.1);border:0.5px solid var(--cs);border-radius:20px;padding:3px 11px;font-size:11px;color:var(--c);font-weight:500;}
+.pillt{background:rgba(0,168,150,0.1);border-color:rgba(0,168,150,0.4);color:var(--t);}
+.pilld{background:rgba(79,195,247,0.08);border-color:rgba(79,195,247,0.2);color:var(--l);}
+.step{display:flex;gap:11px;align-items:flex-start;margin-bottom:12px;}
+.sn{width:23px;height:23px;border-radius:50%;background:var(--b);border:1px solid var(--c);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--c);flex-shrink:0;margin-top:1px;}
+.sb{font-size:13px;color:var(--o);line-height:1.55;}
+.stl{font-weight:600;color:var(--w);display:block;margin-bottom:2px;}
+.ci{display:flex;gap:8px;margin-bottom:8px;font-size:13px;color:var(--o);line-height:1.5;align-items:flex-start;}
+.ck{width:15px;height:15px;flex-shrink:0;margin-top:1px;}
+.tr{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:0;border-bottom:0.5px solid var(--cb);padding:8px 14px;font-size:12px;}
+.tr.th{font-size:10px;font-weight:600;letter-spacing:0.09em;color:var(--m);text-transform:uppercase;background:rgba(0,212,255,0.04);}
+.tc{color:var(--o);}.tcn{color:var(--w);font-weight:600;}
+.chain{display:flex;align-items:stretch;gap:0;margin:12px 0;}
+.cn{background:var(--cd);border:0.5px solid var(--cs);border-radius:8px;padding:9px 10px;font-size:11px;color:var(--o);text-align:center;flex:1;}
+.cnl{font-size:9px;color:var(--m);margin-bottom:3px;font-family:'JetBrains Mono',monospace;}
+.cnv{font-weight:600;color:var(--c);font-size:10px;font-family:'JetBrains Mono',monospace;}
+.ca{width:20px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--m);font-size:13px;}
+.fw{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.fwi{display:flex;gap:9px;align-items:flex-start;padding:11px;background:var(--cd);border:0.5px solid var(--cb);border-radius:8px;}
+.fwa{font-size:15px;color:var(--c);flex-shrink:0;line-height:1.2;}
+.fwt{font-size:12px;color:var(--o);line-height:1.4;}
+.fwtl{font-weight:600;color:var(--w);display:block;margin-bottom:1px;}
+.hr{border:none;border-top:0.5px solid var(--cb);margin:11px 0;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:11px 50px;border-top:0.5px solid var(--cb);background:rgba(6,13,26,0.96);}
+.nb{background:transparent;border:0.5px solid var(--cs);border-radius:6px;color:var(--c);font-size:12px;font-weight:500;padding:6px 16px;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:background 0.15s;}
+.nb:hover{background:rgba(0,212,255,0.09);}
+.nb:disabled{opacity:0.25;cursor:default;background:transparent;}
+.dots{display:flex;gap:5px;}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--d2);cursor:pointer;transition:background 0.2s;}
+.dot.active{background:var(--c);}
+.nl{font-size:11px;color:var(--m);min-width:48px;text-align:center;}
+</style>
+
+<div class="deck" id="deck">
+
+<!-- S1: COVER — with corrected V icon watermark -->
+<div class="slide active" id="slide-1">
+  <div class="bar"></div>
+  <!-- V icon mark only, large, top-right watermark -->
+  <svg style="position:absolute;right:-40px;top:-20px;width:420px;height:auto;opacity:0.09;pointer-events:none;" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="dv1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0A4B8F"/><stop offset="100%" stop-color="#00A896"/></linearGradient>
+      <linearGradient id="dv2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#00A896"/><stop offset="100%" stop-color="#00D4FF"/></linearGradient>
+      <linearGradient id="dv3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#5BB4E5"/></linearGradient>
+    </defs>
+    <path d="M 25 20 L 60 95 L 95 20 L 105 20 L 60 110 L 15 20 Z" fill="url(#dv1)" opacity="0.28"/>
+    <path d="M 33 28 L 60 85 L 87 28 L 95 28 L 60 100 L 25 28 Z" fill="url(#dv2)" opacity="0.55"/>
+    <path d="M 41 36 L 60 75 L 79 36 L 85 36 L 60 90 L 35 36 Z" fill="url(#dv3)" opacity="1"/>
+  </svg>
+  <div>
+    <div style="margin-bottom:36px;">
+      <svg width="220" height="66" viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="pg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0A4B8F"/><stop offset="100%" stop-color="#00A896"/></linearGradient><linearGradient id="pg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#00A896"/><stop offset="100%" stop-color="#00D4FF"/></linearGradient><linearGradient id="pg3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#5BB4E5"/></linearGradient><linearGradient id="tg1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#00A896"/></linearGradient></defs>
+        <g transform="translate(20,10)"><path d="M 25 20 L 50 79 L 75 20 L 83 20 L 50 92 L 17 20 Z" fill="url(#pg1)" opacity="0.28"/><path d="M 30 26 L 50 71 L 70 26 L 76 26 L 50 83 L 24 26 Z" fill="url(#pg2)" opacity="0.55"/><path d="M 35 32 L 50 63 L 65 32 L 70 32 L 50 75 L 30 32 Z" fill="url(#pg3)" opacity="1"/></g>
+        <text x="108" y="78" font-family="Space Grotesk, sans-serif" font-size="42" font-weight="700" fill="url(#tg1)">Verity</text>
+      </svg>
+      <div style="font-size:9px;letter-spacing:0.14em;color:var(--m);text-transform:uppercase;margin-top:2px;padding-left:2px;">Operator Partnership Deck · Confidential</div>
+    </div>
+    <div class="ey">Introducing</div>
+    <svg width="240" height="80" viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:14px;">
+      <defs><linearGradient id="vsg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0A4B8F"/><stop offset="100%" stop-color="#00A896"/></linearGradient><linearGradient id="vag" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#00A896"/></linearGradient></defs>
+      <path d="M 23 30 L 30 37 L 43 20" stroke="url(#vag)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="10" y="50" width="40" height="8" rx="2" fill="url(#vsg)" opacity="0.4"/>
+      <rect x="10" y="62" width="40" height="8" rx="2" fill="url(#vsg)" opacity="0.7"/>
+      <rect x="10" y="74" width="40" height="8" rx="2" fill="url(#vsg)"/>
+      <text x="65" y="50" font-family="Space Grotesk, sans-serif" font-size="28" font-weight="700" fill="#F0F6FC">VERITY</text>
+      <text x="65" y="78" font-family="Space Grotesk, sans-serif" font-size="28" font-weight="700" fill="url(#vag)">STACK</text>
+    </svg>
+    <p class="sub">Turn your platform into the home of credentialed sports analysts. Increase retention, unlock new revenue streams, and give your users a reason to stay.</p>
+  </div>
+  <div style="display:flex;gap:28px;align-items:center;margin-top:22px;">
+    <div><div class="sv">$220B</div><div class="sl">Global sports betting market<br>by 2030 (Statista, 2024)</div></div>
+    <div style="width:1px;height:40px;background:var(--cb);"></div>
+    <div><div class="sv">94%</div><div class="sl">Of tipster records online<br>are unverifiable</div></div>
+    <div style="width:1px;height:40px;background:var(--cb);"></div>
+    <div><div class="sv">0</div><div class="sl">Operators with a native<br>analyst credentialing layer</div></div>
+  </div>
+</div>
+
+<!-- S2 -->
+<div class="slide" id="slide-2">
+  <div class="bar"></div>
+  <svg style="position:absolute;top:16px;right:50px;" width="120" height="40" viewBox="0 0 300 100"><defs><linearGradient id="h2sg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0A4B8F"/><stop offset="100%" stop-color="#00A896"/></linearGradient><linearGradient id="h2ag" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#00A896"/></linearGradient></defs><path d="M 23 30 L 30 37 L 43 20" stroke="url(#h2ag)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="10" y="50" width="40" height="8" rx="2" fill="url(#h2sg)" opacity="0.4"/><rect x="10" y="62" width="40" height="8" rx="2" fill="url(#h2sg)" opacity="0.7"/><rect x="10" y="74" width="40" height="8" rx="2" fill="url(#h2sg)"/><text x="65" y="50" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="#F0F6FC">VERITY</text><text x="65" y="78" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="url(#h2ag)">STACK</text></svg>
+  <div>
+    <div class="ey">The problem</div>
+    <h2 class="st">Your users can't trust the picks they follow.<br>That's your problem too.</h2>
+    <div class="g3" style="margin-top:18px;">
+      <div class="card"><div style="font-size:24px;font-weight:700;color:#E53935;margin-bottom:7px;">01</div><div style="font-weight:600;font-size:13px;margin-bottom:6px;">No verified track records</div><p style="font-size:12px;color:var(--m);line-height:1.6;">Any user can claim to be a 70% ATS expert. There is no infrastructure on any major platform to verify or disprove it. Users get burned. They leave.</p></div>
+      <div class="card"><div style="font-size:24px;font-weight:700;color:#E53935;margin-bottom:7px;">02</div><div style="font-weight:600;font-size:13px;margin-bottom:6px;">No differentiation layer</div><p style="font-size:12px;color:var(--m);line-height:1.6;">Betting operators compete on odds and UX. There is no product layer that rewards skill, builds loyalty, or creates a reason for expert users to stay.</p></div>
+      <div class="card"><div style="font-size:24px;font-weight:700;color:#E53935;margin-bottom:7px;">03</div><div style="font-weight:600;font-size:13px;margin-bottom:6px;">No analyst monetization</div><p style="font-size:12px;color:var(--m);line-height:1.6;">Proven analysts have no credible way to monetize their record on your platform. They migrate to third-party services, taking their audience with them.</p></div>
+    </div>
+  </div>
+  <div class="cardc" style="margin-top:14px;padding:12px 16px;"><p style="font-size:13px;color:var(--o);">High-value users have no structural reason to stay. Your platform is a commodity. <span class="cy" style="font-weight:600;">Verity Stack changes this.</span></p></div>
+</div>
+
+<!-- S3 -->
+<div class="slide" id="slide-3">
+  <div class="bar"></div>
+  <svg style="position:absolute;top:16px;right:50px;" width="120" height="40" viewBox="0 0 300 100"><defs><linearGradient id="h3sg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0A4B8F"/><stop offset="100%" stop-color="#00A896"/></linearGradient><linearGradient id="h3ag" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#00A896"/></linearGradient></defs><path d="M 23 30 L 30 37 L 43 20" stroke="url(#h3ag)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="10" y="50" width="40" height="8" rx="2" fill="url(#h3sg)" opacity="0.4"/><rect x="10" y="62" width="40" height="8" rx="2" fill="url(#h3sg)" opacity="0.7"/><rect x="10" y="74" width="40" height="8" rx="2" fill="url(#h3sg)"/><text x="65" y="50" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="#F0F6FC">VERITY</text><text x="65" y="78" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="url(#h3ag)">STACK</text></svg>
+  <div>
+    <div class="ey">The cost of inaction</div>
+    <h2 class="st">What this is costing you right now.</h2>
+    <div class="g2" style="margin-top:18px;gap:16px;">
+      <div>
+        <div class="step"><div class="sn" style="background:#1A1010;border-color:#E53935;color:#E53935;">↓</div><div class="sb"><span class="stl">Expert user churn</span>Skilled bettors build followings on Twitter, Substack, and Telegram — not on your platform. You provide the venue. They extract the value elsewhere.</div></div>
+        <div class="step"><div class="sn" style="background:#1A1010;border-color:#E53935;color:#E53935;">↓</div><div class="sb"><span class="stl">Social acquisition left on the table</span>Every correct prediction is a sharing moment with no verified asset attached. That organic acquisition opportunity disappears with every unverified win.</div></div>
+      </div>
+      <div>
+        <div class="step"><div class="sn" style="background:#1A1010;border-color:#E53935;color:#E53935;">↓</div><div class="sb"><span class="stl">Reputational exposure</span>Fake gurus operating on your platform damage your brand when exposed. You have no mechanism to surface the real from the fabricated.</div></div>
+        <div class="step"><div class="sn" style="background:#1A1010;border-color:#E53935;color:#E53935;">↓</div><div class="sb"><span class="stl">Zero recurring revenue from expert traffic</span>Your top analysts generate engagement and deposits from their followers. You capture none of it as recurring platform revenue. That is addressable today.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S4 -->
+<div class="slide" id="slide-4">
+  <div class="bar"></div>
+  <svg style="position:absolute;top:16px;right:50px;" width="120" height="40" viewBox="0 0 300 100"><defs><linearGradient id="h4sg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0A4B8F"/><stop offset="100%" stop-color="#00A896"/></linearGradient><linearGradient id="h4ag" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#00A896"/></linearGradient></defs><path d="M 23 30 L 30 37 L 43 20" stroke="url(#h4ag)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="10" y="50" width="40" height="8" rx="2" fill="url(#h4sg)" opacity="0.4"/><rect x="10" y="62" width="40" height="8" rx="2" fill="url(#h4sg)" opacity="0.7"/><rect x="10" y="74" width="40" height="8" rx="2" fill="url(#h4sg)"/><text x="65" y="50" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="#F0F6FC">VERITY</text><text x="65" y="78" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="url(#h4ag)">STACK</text></svg>
+  <div>
+    <div class="ey">The solution</div>
+    <h2 class="st">Verity Stack: verified prediction infrastructure,<br>licensed to operators.</h2>
+    <p class="sub" style="margin-bottom:18px;">A turnkey API and SDK adding a cryptographic verification layer to your platform. Every prediction locked, resolved, and permanently proven — under your brand.</p>
+    <div class="g3" style="margin-bottom:16px;">
+      <div class="card"><div class="pill" style="margin-bottom:9px;">For your platform</div><div style="font-weight:600;font-size:13px;margin-bottom:5px;">Native credentialing</div><p style="font-size:12px;color:var(--m);line-height:1.5;">Verified analyst tiers and track records directly in your UI. No third-party redirect.</p></div>
+      <div class="card"><div class="pill pillt" style="margin-bottom:9px;">For your analysts</div><div style="font-weight:600;font-size:13px;margin-bottom:5px;">Tamper-proof record</div><p style="font-size:12px;color:var(--m);line-height:1.5;">Every prediction timestamped and locked before the event. Automatic resolution. No disputes.</p></div>
+      <div class="card"><div class="pill pilld" style="margin-bottom:9px;">For your business</div><div style="font-weight:600;font-size:13px;margin-bottom:5px;">New revenue streams</div><p style="font-size:12px;color:var(--m);line-height:1.5;">Picks Marketplace, analyst subscriptions, institutional data licensing — all under your brand.</p></div>
+    </div>
+    <div>
+      <div style="font-size:10px;font-weight:600;letter-spacing:0.13em;color:var(--m);text-transform:uppercase;margin-bottom:7px;">Brand architecture</div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <div style="padding:4px 12px;background:rgba(10,75,143,0.2);border:0.5px solid rgba(10,75,143,0.5);border-radius:6px;font-size:11px;font-weight:600;color:#5BB4E5;">Verity <span style="opacity:0.6;font-weight:400;">— master brand</span></div>
+        <span style="color:var(--d2);">›</span>
+        <div style="padding:4px 12px;background:rgba(0,168,150,0.1);border:0.5px solid rgba(0,168,150,0.35);border-radius:6px;font-size:11px;font-weight:600;color:var(--t);">Verity Layer <span style="opacity:0.6;font-weight:400;">— infrastructure</span></div>
+        <span style="color:var(--d2);">›</span>
+        <div style="padding:4px 12px;background:rgba(0,212,255,0.08);border:0.5px solid var(--cs);border-radius:6px;font-size:11px;font-weight:600;color:var(--c);">Verity Stack <span style="opacity:0.6;font-weight:400;">— SaaS you license</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S5 -->
+<div class="slide" id="slide-5">
+  <div class="bar"></div>
+  <svg style="position:absolute;top:16px;right:50px;" width="120" height="40" viewBox="0 0 300 100"><defs><linearGradient id="h5sg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0A4B8F"/><stop offset="100%" stop-color="#00A896"/></linearGradient><linearGradient id="h5ag" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#00A896"/></linearGradient></defs><path d="M 23 30 L 30 37 L 43 20" stroke="url(#h5ag)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="10" y="50" width="40" height="8" rx="2" fill="url(#h5sg)" opacity="0.4"/><rect x="10" y="62" width="40" height="8" rx="2" fill="url(#h5sg)" opacity="0.7"/><rect x="10" y="74" width="40" height="8" rx="2" fill="url(#h5sg)"/><text x="65" y="50" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="#F0F6FC">VERITY</text><text x="65" y="78" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="url(#h5ag)">STACK</text></svg>
+  <div>
+    <div class="ey">How it works</div>
+    <h2 class="st">The prediction lifecycle — lock to proof.</h2>
+    <div style="margin-top:18px;">
+      <div class="step"><div class="sn">1</div><div class="sb"><span class="stl">Prediction submitted & locked</span>Analyst submits their pick via your platform. Verity Stack seals the prediction — timestamped and cryptographically committed — up to 60 seconds before event start. No backdating possible at any layer.</div></div>
+      <div class="step"><div class="sn">2</div><div class="sb"><span class="stl">Commitment written to Verity Layer</span>A unique fingerprint is written to the Verity Layer — our dedicated verification ledger on HGTP. Full prediction content stored on decentralized storage. The ledger record is permanent and publicly queryable.</div></div>
+      <div class="step"><div class="sn">3</div><div class="sb"><span class="stl">Automatic resolution via dual oracle</span>Within seconds of the final whistle, two independent data providers confirm the outcome. Consensus via proof-of-verification. Automatic — no manual review, no disputes.</div></div>
+      <div class="step"><div class="sn">4</div><div class="sb"><span class="stl">Proof Card issued</span>A verified Proof Card is generated — branded to your platform, shareable, and independently verifiable via QR code against HGTP. Correct calls become distributable acquisition assets.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- S6 -->
+<div class="slide" id="slide-6">
+  <div class="bar"></div>
+  <svg style="position:absolute;top:16px;right:50px;" width="120" height="40" viewBox="0 0 300 100"><defs><linearGradient id="h6sg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0A4B8F"/><stop offset="100%" stop-color="#00A896"/></linearGradient><linearGradient id="h6ag" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#00A896"/></linearGradient></defs><path d="M 23 30 L 30 37 L 43 20" stroke="url(#h6ag)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="10" y="50" width="40" height="8" rx="2" fill="url(#h6sg)" opacity="0.4"/><rect x="10" y="62" width="40" height="8" rx="2" fill="url(#h6sg)" opacity="0.7"/><rect x="10" y="74" width="40" height="8" rx="2" fill="url(#h6sg)"/><text x="65" y="50" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="#F0F6FC">VERITY</text><text x="65" y="78" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="url(#h6ag)">STACK</text></svg>
+  <div>
+    <div class="ey">Technical foundation</div>
+    <h2 class="st">Why "immutable" actually means immutable here.</h2>
+    <p class="sub" style="margin-bottom:14px;">Verity Layer runs on Constellation's HGTP — enterprise-grade data availability infrastructure. Proof-of-verification consensus means no single party can alter a resolved record.</p>
+    <div class="chain">
+      <div class="cn"><div class="cnl">Submitted</div><div class="cnv">SHA-256 hash</div></div>
+      <div class="ca">→</div>
+      <div class="cn"><div class="cnl">Signed</div><div class="cnv">secp256k1 ECDSA</div></div>
+      <div class="ca">→</div>
+      <div class="cn"><div class="cnl">Consensus</div><div class="cnv">proof_of_verification</div></div>
+      <div class="ca">→</div>
+      <div class="cn"><div class="cnl">Finality</div><div class="cnv">HGTP snapshot</div></div>
+      <div class="ca">→</div>
+      <div class="cn"><div class="cnl">Public</div><div class="cnv">independently verifiable</div></div>
+    </div>
+    <div class="g2" style="gap:11px;margin-top:4px;">
+      <div class="card"><div style="font-weight:600;font-size:12px;margin-bottom:7px;">Anchored on-chain</div><p class="mono" style="font-size:11px;color:var(--c);line-height:2.1;">prediction_id (SHA-256)<br>lock_timestamp<br>event_id · bet_type · line<br>resolution_outcome<br>global_snapshot_hash</p></div>
+      <div class="card"><div style="font-weight:600;font-size:12px;margin-bottom:7px;">Any third party can verify</div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Prediction existed before the event</span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Resolved correctly by dual oracle</span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Belongs to a specific verified analyst</span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>No trust in Verity or operator required</span></div>
+      </div>
+    </div>
+    <div class="cardc" style="margin-top:11px;padding:10px 14px;"><p style="font-size:11px;color:var(--o);">Infrastructure: <span class="mono cy" style="font-size:10px;">HGTP · layer_type: data_availability · SHA-256 / SHA-512 / secp256k1</span> — Full spec in the engineering deep-dive.</p></div>
+  </div>
+</div>
+
+<!-- S7 -->
+<div class="slide" id="slide-7">
+  <div class="bar"></div>
+  <svg style="position:absolute;top:16px;right:50px;" width="120" height="40" viewBox="0 0 300 100"><defs><linearGradient id="h7sg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0A4B8F"/><stop offset="100%" stop-color="#00A896"/></linearGradient><linearGradient id="h7ag" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#00A896"/></linearGradient></defs><path d="M 23 30 L 30 37 L 43 20" stroke="url(#h7ag)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="10" y="50" width="40" height="8" rx="2" fill="url(#h7sg)" opacity="0.4"/><rect x="10" y="62" width="40" height="8" rx="2" fill="url(#h7sg)" opacity="0.7"/><rect x="10" y="74" width="40" height="8" rx="2" fill="url(#h7sg)"/><text x="65" y="50" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="#F0F6FC">VERITY</text><text x="65" y="78" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="url(#h7ag)">STACK</text></svg>
+  <div>
+    <div class="ey">The credentialing system</div>
+    <h2 class="st">Five tiers. One formula. Impossible to fake.</h2>
+    <p class="sub" style="margin-bottom:14px;">VerityScore combines long-run accuracy with streak performance. Recalculates on every resolution. Voided predictions excluded entirely.</p>
+    <div style="border:0.5px solid var(--cb);border-radius:10px;overflow:hidden;margin-bottom:12px;">
+      <div class="tr th"><div class="tc">Tier</div><div class="tc">VerityScore</div><div class="tc">Min predictions</div><div class="tc">Platform value</div></div>
+      <div class="tr"><div class="tcn"><span class="pill pilld" style="font-size:10px;">Novice</span></div><div class="tc mono" style="font-size:11px;">0.00 – 0.39</div><div class="tc">Any</div><div class="tc mu">Building history</div></div>
+      <div class="tr"><div class="tcn"><span class="pill pilld" style="font-size:10px;">Trusted</span></div><div class="tc mono" style="font-size:11px;">0.40 – 0.54</div><div class="tc">10+</div><div class="tc mu">Surfaceable in feeds</div></div>
+      <div class="tr"><div class="tcn"><span class="pill" style="font-size:10px;">Expert</span></div><div class="tc mono cy" style="font-size:11px;">0.55 – 0.69</div><div class="tc">25+</div><div class="tc" style="color:var(--l);">Featured placement</div></div>
+      <div class="tr"><div class="tcn"><span class="pill pillt" style="font-size:10px;">Master</span></div><div class="tc mono te" style="font-size:11px;">0.70 – 0.84</div><div class="tc">50+</div><div class="tc te">Premium tier access</div></div>
+      <div class="tr" style="border-bottom:none;"><div class="tcn"><span class="pill cy" style="font-size:10px;background:rgba(0,212,255,0.15);">Legend</span></div><div class="tc mono cy" style="font-size:11px;">0.85 – 1.00</div><div class="tc">100+</div><div class="tc cy">Marketplace eligible</div></div>
+    </div>
+    <div class="card" style="padding:10px 14px;"><p style="font-size:12px;color:var(--m);">VerityScore = <span class="mono" style="color:var(--w);font-size:11px;">(Accuracy × 0.70) + (Streak_factor × 0.30)</span> · Streak: <span class="mono" style="color:var(--w);font-size:11px;">log(streak+1) / log(21)</span>, capped at 1.0 for streak ≥ 20.</p></div>
+  </div>
+</div>
+
+<!-- S8 -->
+<div class="slide" id="slide-8">
+  <div class="bar"></div>
+  <svg style="position:absolute;top:16px;right:50px;" width="120" height="40" viewBox="0 0 300 100"><defs><linearGradient id="h8sg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0A4B8F"/><stop offset="100%" stop-color="#00A896"/></linearGradient><linearGradient id="h8ag" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#00A896"/></linearGradient></defs><path d="M 23 30 L 30 37 L 43 20" stroke="url(#h8ag)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="10" y="50" width="40" height="8" rx="2" fill="url(#h8sg)" opacity="0.4"/><rect x="10" y="62" width="40" height="8" rx="2" fill="url(#h8sg)" opacity="0.7"/><rect x="10" y="74" width="40" height="8" rx="2" fill="url(#h8sg)"/><text x="65" y="50" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="#F0F6FC">VERITY</text><text x="65" y="78" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="url(#h8ag)">STACK</text></svg>
+  <div>
+    <div class="ey">Retention mechanics</div>
+    <h2 class="st">Reputation is a sticky asset.<br>Users can't take it elsewhere.</h2>
+    <p class="sub" style="margin-bottom:16px;">A verified track record built on your platform exists on your platform. An analyst with 300 verified predictions and an Expert badge has genuine equity they cannot replicate elsewhere without starting from zero.</p>
+    <div class="fw">
+      <div class="fwi"><div class="fwa">↗</div><div class="fwt"><span class="fwtl">Analysts stay to protect their record</span>Every prediction deepens their verified history. Migration means abandoning proof of performance built over months.</div></div>
+      <div class="fwi"><div class="fwa">↗</div><div class="fwt"><span class="fwtl">Followers stay to track their analysts</span>Users who follow verified analysts return daily. Their analyst's next pick is here — not somewhere else.</div></div>
+      <div class="fwi"><div class="fwa">↗</div><div class="fwt"><span class="fwtl">New users arrive via Proof Cards</span>Shareable verified wins drive inbound from social. Each correct call points back to your platform.</div></div>
+      <div class="fwi"><div class="fwa">↗</div><div class="fwt"><span class="fwtl">Tier progression creates long-run goals</span>Analysts chasing Expert, Master, or Legend have a multi-month engagement arc. Retention becomes structural.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- S9 -->
+<div class="slide" id="slide-9">
+  <div class="bar"></div>
+  <svg style="position:absolute;top:16px;right:50px;" width="120" height="40" viewBox="0 0 300 100"><defs><linearGradient id="h9sg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0A4B8F"/><stop offset="100%" stop-color="#00A896"/></linearGradient><linearGradient id="h9ag" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#00A896"/></linearGradient></defs><path d="M 23 30 L 30 37 L 43 20" stroke="url(#h9ag)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="10" y="50" width="40" height="8" rx="2" fill="url(#h9sg)" opacity="0.4"/><rect x="10" y="62" width="40" height="8" rx="2" fill="url(#h9sg)" opacity="0.7"/><rect x="10" y="74" width="40" height="8" rx="2" fill="url(#h9sg)"/><text x="65" y="50" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="#F0F6FC">VERITY</text><text x="65" y="78" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="url(#h9ag)">STACK</text></svg>
+  <div>
+    <div class="ey">Product feature</div>
+    <h2 class="st">Build a verified tipster marketplace.<br>Own the credentialed analyst layer.</h2>
+    <div class="g21" style="margin-top:16px;">
+      <div>
+        <div class="step"><div class="sn">1</div><div class="sb"><span class="stl">Curated analyst discovery</span>Surface analysts by tier, sport, bet type, and recent performance. Users browse credentialed experts — not anonymous accounts — with verified records behind every profile.</div></div>
+        <div class="step"><div class="sn">2</div><div class="sb"><span class="stl">Featured expert placement</span>Expert-tier and above surfaced in prominent positions — pick of the day, top movers, rising analysts. Every featured placement backed by on-chain verification.</div></div>
+        <div class="step"><div class="sn">3</div><div class="sb"><span class="stl">Rising analyst spotlights</span>Surface analysts building momentum — high streaks, improving accuracy, recent hot runs. Platform discovery loops that drive engagement.</div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:11px;">
+        <div class="cardt"><div class="sv" style="font-size:20px;">Expert+</div><div class="sl">Min tier for featured marketplace placement</div></div>
+        <div class="cardt"><div class="sv" style="font-size:20px;color:var(--t);">100%</div><div class="sl">Operator-branded. No Verity identity visible.</div></div>
+        <div class="cardt"><div class="sv mono" style="font-size:20px;color:var(--l);">API</div><div class="sl">Full analyst data via REST + WebSocket</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S10 -->
+<div class="slide" id="slide-10">
+  <div class="bar"></div>
+  <svg style="position:absolute;top:16px;right:50px;" width="120" height="40" viewBox="0 0 300 100"><defs><linearGradient id="h10sg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0A4B8F"/><stop offset="100%" stop-color="#00A896"/></linearGradient><linearGradient id="h10ag" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#00A896"/></linearGradient></defs><path d="M 23 30 L 30 37 L 43 20" stroke="url(#h10ag)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="10" y="50" width="40" height="8" rx="2" fill="url(#h10sg)" opacity="0.4"/><rect x="10" y="62" width="40" height="8" rx="2" fill="url(#h10sg)" opacity="0.7"/><rect x="10" y="74" width="40" height="8" rx="2" fill="url(#h10sg)"/><text x="65" y="50" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="#F0F6FC">VERITY</text><text x="65" y="78" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="url(#h10ag)">STACK</text></svg>
+  <div>
+    <div class="ey">Revenue stream</div>
+    <h2 class="st">The Picks Marketplace.<br>Analysts monetize. You earn.</h2>
+    <p class="sub" style="margin-bottom:18px;">Legend-tier analysts offer paid subscription picks packages directly on your platform. You host. You keep 97% of all GMV. Verity takes 3%.</p>
+    <div class="g3" style="gap:11px;margin-bottom:14px;">
+      <div class="cardc" style="text-align:center;padding:18px 12px;"><div class="sv">97%</div><div class="sl">of Picks Marketplace GMV<br>retained by the operator</div></div>
+      <div class="card" style="text-align:center;padding:18px 12px;"><div class="sv" style="color:var(--t);">Legend</div><div class="sl">Tier required to list<br>paid picks packages</div></div>
+      <div class="card" style="text-align:center;padding:18px 12px;"><div class="sv mono">$0</div><div class="sl">Additional infrastructure cost<br>to run the marketplace</div></div>
+    </div>
+    <div class="card" style="padding:13px 16px;">
+      <div style="font-weight:600;font-size:12px;margin-bottom:7px;">Why this works commercially</div>
+      <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00A896" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00A896" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Every pick sold is verifiably from a credentialed analyst — compliance and reputation risk structurally reduced.</span></div>
+      <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00A896" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00A896" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Subscribers of picks packages are highly engaged depositing users. Marketplace drives betting activity, not just subscription revenue.</span></div>
+      <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00A896" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00A896" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Analysts building a subscriber base here have compounding reasons not to leave. Marketplace as retention mechanism.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- S11 -->
+<div class="slide" id="slide-11">
+  <div class="bar"></div>
+  <svg style="position:absolute;top:16px;right:50px;" width="120" height="40" viewBox="0 0 300 100"><defs><linearGradient id="h11sg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0A4B8F"/><stop offset="100%" stop-color="#00A896"/></linearGradient><linearGradient id="h11ag" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#00A896"/></linearGradient></defs><path d="M 23 30 L 30 37 L 43 20" stroke="url(#h11ag)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="10" y="50" width="40" height="8" rx="2" fill="url(#h11sg)" opacity="0.4"/><rect x="10" y="62" width="40" height="8" rx="2" fill="url(#h11sg)" opacity="0.7"/><rect x="10" y="74" width="40" height="8" rx="2" fill="url(#h11sg)"/><text x="65" y="50" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="#F0F6FC">VERITY</text><text x="65" y="78" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="url(#h11ag)">STACK</text></svg>
+  <div>
+    <div class="ey">Organic acquisition</div>
+    <h2 class="st">Proof Cards. Every correct call<br>becomes an acquisition asset.</h2>
+    <div class="g21" style="margin-top:16px;gap:20px;">
+      <div>
+        <p style="font-size:13px;color:var(--o);line-height:1.7;margin-bottom:13px;">When an analyst nails a call, Verity Stack generates a branded Proof Card — verifiable proof the pick was made before the event, resolved correctly, and belongs to that analyst. Your brand on every card.</p>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Your brand only. No Verity identity visible.</span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>QR code links directly back to your platform.</span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Third parties verify against HGTP — no login required.</span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>PNG + SVG export. Shareable to X, Instagram, Discord.</span></div>
+      </div>
+      <div class="cardc" style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:7px;padding:20px 16px;text-align:center;">
+        <div style="font-size:9px;letter-spacing:0.14em;color:var(--c);text-transform:uppercase;font-weight:600;">Verified Prediction</div>
+        <div style="font-size:19px;font-weight:700;">Chiefs -3.5</div>
+        <div style="font-size:11px;color:var(--m);">NFL · Week 14 · Point Spread</div>
+        <div style="margin:5px 0;padding:4px 13px;background:rgba(0,168,150,0.15);border:0.5px solid var(--t);border-radius:20px;font-size:11px;color:var(--t);font-weight:600;">✓ CORRECT</div>
+        <div class="mono" style="font-size:10px;color:var(--m);">Locked 4h 12m before kickoff</div>
+        <div style="font-size:11px;color:var(--m);">Expert · VerityScore <span class="mono">0.61</span></div>
+        <div class="mono" style="font-size:9px;color:var(--d2);margin-top:4px;">HGTP · snapshot #4829174</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S12 -->
+<div class="slide" id="slide-12">
+  <div class="bar"></div>
+  <svg style="position:absolute;top:16px;right:50px;" width="120" height="40" viewBox="0 0 300 100"><defs><linearGradient id="h12sg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0A4B8F"/><stop offset="100%" stop-color="#00A896"/></linearGradient><linearGradient id="h12ag" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#00A896"/></linearGradient></defs><path d="M 23 30 L 30 37 L 43 20" stroke="url(#h12ag)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="10" y="50" width="40" height="8" rx="2" fill="url(#h12sg)" opacity="0.4"/><rect x="10" y="62" width="40" height="8" rx="2" fill="url(#h12sg)" opacity="0.7"/><rect x="10" y="74" width="40" height="8" rx="2" fill="url(#h12sg)"/><text x="65" y="50" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="#F0F6FC">VERITY</text><text x="65" y="78" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="url(#h12ag)">STACK</text></svg>
+  <div>
+    <div class="ey">Technical integration</div>
+    <h2 class="st">Built to integrate. Not to replace.</h2>
+    <p class="sub" style="margin-bottom:16px;">Verity Stack sits alongside your existing infrastructure. No platform migration. No data handover. Operators retain full control.</p>
+    <div class="g2" style="gap:13px;margin-bottom:13px;">
+      <div class="card"><div style="font-weight:600;font-size:12px;margin-bottom:8px;">API surface</div><div class="mono" style="font-size:11px;color:var(--c);line-height:2.1;">POST /v1/predictions<br>GET &nbsp;/v1/predictions/{id}<br>GET &nbsp;/v1/users/{id}/reputation<br>GET &nbsp;/v1/events/{id}<br>POST /v1/webhooks<br>wss://api.verity.io/v1/stream</div></div>
+      <div>
+        <div class="ci" style="margin-bottom:9px;"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><strong style="color:var(--w);">REST + WebSocket</strong> — query endpoints for predictions, reputation, events. Real-time resolution stream.</span></div>
+        <div class="ci" style="margin-bottom:9px;"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><strong style="color:var(--w);">White-label SDK</strong> — iOS, Android, web. Drop-in UI components under your brand.</span></div>
+        <div class="ci" style="margin-bottom:9px;"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><strong style="color:var(--w);">Webhooks</strong> — HMAC-SHA256 signed: <span class="mono" style="font-size:10px;color:var(--l);">prediction.locked · prediction.resolved · user.tier_changed</span></span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><strong style="color:var(--w);">Namespace isolation</strong> — API key cryptographically bound to your operator namespace at protocol level.</span></div>
+      </div>
+    </div>
+    <div class="cardc" style="padding:10px 14px;"><p style="font-size:12px;color:var(--o);">Full architecture, data models, and SDK docs in the technical deep-dive. Typical time to first integration: <span class="cy" style="font-weight:600;">days, not months.</span></p></div>
+  </div>
+</div>
+
+<!-- S13 -->
+<div class="slide" id="slide-13">
+  <div class="bar"></div>
+  <svg style="position:absolute;top:16px;right:50px;" width="120" height="40" viewBox="0 0 300 100"><defs><linearGradient id="h13sg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0A4B8F"/><stop offset="100%" stop-color="#00A896"/></linearGradient><linearGradient id="h13ag" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#00A896"/></linearGradient></defs><path d="M 23 30 L 30 37 L 43 20" stroke="url(#h13ag)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="10" y="50" width="40" height="8" rx="2" fill="url(#h13sg)" opacity="0.4"/><rect x="10" y="62" width="40" height="8" rx="2" fill="url(#h13sg)" opacity="0.7"/><rect x="10" y="74" width="40" height="8" rx="2" fill="url(#h13sg)"/><text x="65" y="50" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="#F0F6FC">VERITY</text><text x="65" y="78" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="url(#h13ag)">STACK</text></svg>
+  <div>
+    <div class="ey">Licensing model</div>
+    <h2 class="st">Three tiers. One right fit<br>for where you are today.</h2>
+    <p class="sub" style="margin-bottom:18px;">Monthly SaaS licensing. All tiers include full API, white-label SDK, and operator dashboard. Pricing discussed in follow-up.</p>
+    <div class="g3" style="gap:13px;">
+      <div class="card" style="padding:20px 16px;">
+        <div class="pill pilld" style="margin-bottom:11px;">Starter</div>
+        <div style="font-size:19px;font-weight:700;margin-bottom:2px;">Up to 10K</div>
+        <div style="font-size:11px;color:var(--m);margin-bottom:12px;">predictions / month</div>
+        <hr class="hr">
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#4FC3F7" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#4FC3F7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:12px;">Full API + WebSocket</span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#4FC3F7" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#4FC3F7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:12px;">White-label SDK</span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#4FC3F7" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#4FC3F7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:12px;">Operator dashboard</span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#4FC3F7" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#4FC3F7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:12px;">Proof Cards</span></div>
+      </div>
+      <div style="background:rgba(0,212,255,0.05);border:1.5px solid var(--c);border-radius:10px;padding:20px 16px;position:relative;">
+        <div style="position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--c);color:var(--n);font-size:9px;font-weight:700;letter-spacing:0.1em;padding:2px 11px;border-radius:0 0 6px 6px;white-space:nowrap;">MOST POPULAR</div>
+        <div class="pill" style="margin-bottom:11px;margin-top:5px;">Professional</div>
+        <div style="font-size:19px;font-weight:700;margin-bottom:2px;">Up to 50K</div>
+        <div style="font-size:11px;color:var(--m);margin-bottom:12px;">predictions / month</div>
+        <hr class="hr">
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:12px;">Everything in Starter</span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:12px;">Picks Marketplace</span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:12px;">Advanced analytics</span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:12px;">White-label branding</span></div>
+      </div>
+      <div class="card" style="padding:20px 16px;">
+        <div class="pill pillt" style="margin-bottom:11px;">Enterprise</div>
+        <div style="font-size:19px;font-weight:700;margin-bottom:2px;">Up to 250K</div>
+        <div style="font-size:11px;color:var(--m);margin-bottom:12px;">predictions / month</div>
+        <hr class="hr">
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00A896" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00A896" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:12px;">Everything in Professional</span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00A896" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00A896" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:12px;">Institutional data API</span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00A896" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00A896" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:12px;">Dedicated SLA</span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00A896" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00A896" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:12px;">Custom overage terms</span></div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--m);margin-top:11px;text-align:center;">Annual contracts: 15% discount · Add-ons on all tiers · Pricing discussed in follow-up</p>
+  </div>
+</div>
+
+<!-- S14 -->
+<div class="slide" id="slide-14">
+  <div class="bar"></div>
+  <svg style="position:absolute;top:16px;right:50px;" width="120" height="40" viewBox="0 0 300 100"><defs><linearGradient id="h14sg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0A4B8F"/><stop offset="100%" stop-color="#00A896"/></linearGradient><linearGradient id="h14ag" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#00A896"/></linearGradient></defs><path d="M 23 30 L 30 37 L 43 20" stroke="url(#h14ag)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="10" y="50" width="40" height="8" rx="2" fill="url(#h14sg)" opacity="0.4"/><rect x="10" y="62" width="40" height="8" rx="2" fill="url(#h14sg)" opacity="0.7"/><rect x="10" y="74" width="40" height="8" rx="2" fill="url(#h14sg)"/><text x="65" y="50" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="#F0F6FC">VERITY</text><text x="65" y="78" font-family="Space Grotesk,sans-serif" font-size="28" font-weight="700" fill="url(#h14ag)">STACK</text></svg>
+  <div>
+    <div class="ey">Getting started</div>
+    <h2 class="st">The Verity Stack Pilot Program.<br>90 days. No cost. Full access.</h2>
+    <p class="sub" style="margin-bottom:16px;">Structured pilot for a limited first cohort. No commercial commitment to start. Everything needed to evaluate in production conditions.</p>
+    <div class="g2" style="gap:13px;margin-bottom:14px;">
+      <div class="card"><div style="font-weight:600;font-size:12px;color:var(--c);margin-bottom:8px;">What you get</div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Full Professional tier access for 90 days</span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Dedicated integration support from Verity engineers</span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>All sports, all bet types, full Picks Marketplace</span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>White-label Proof Cards under your brand from day one</span></div>
+      </div>
+      <div class="cardt"><div style="font-weight:600;font-size:12px;color:var(--t);margin-bottom:8px;">What we ask in return</div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00A896" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00A896" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Structured feedback at 30, 60, and 90 days</span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00A896" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00A896" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Willingness to be a named case study on success</span></div>
+        <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00A896" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00A896" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Good-faith commercial discussion at day 75 if results warrant</span></div>
+      </div>
+    </div>
+    <div class="cardc" style="padding:11px 15px;text-align:center;"><p style="font-size:12px;color:var(--o);">First cohort: <span class="cy" style="font-weight:600;">5 operators only.</span> First-mover operators receive preferred commercial terms on conversion.</p></div>
+  </div>
+</div>
+
+<!-- S15 -->
+<div class="slide" id="slide-15">
+  <div class="bar"></div>
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:22px;min-height:440px;">
+    <div>
+      <svg width="200" height="60" viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:12px;">
+        <defs><linearGradient id="cpg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0A4B8F"/><stop offset="100%" stop-color="#00A896"/></linearGradient><linearGradient id="cpg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#00A896"/><stop offset="100%" stop-color="#00D4FF"/></linearGradient><linearGradient id="cpg3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#5BB4E5"/></linearGradient><linearGradient id="ctg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#00A896"/></linearGradient></defs>
+        <g transform="translate(20,10)"><path d="M 25 20 L 50 79 L 75 20 L 83 20 L 50 92 L 17 20 Z" fill="url(#cpg1)" opacity="0.28"/><path d="M 30 26 L 50 71 L 70 26 L 76 26 L 50 83 L 24 26 Z" fill="url(#cpg2)" opacity="0.55"/><path d="M 35 32 L 50 63 L 65 32 L 70 32 L 50 75 L 30 32 Z" fill="url(#cpg3)" opacity="1"/></g>
+        <text x="108" y="78" font-family="Space Grotesk, sans-serif" font-size="42" font-weight="700" fill="url(#ctg)">Verity</text>
+      </svg>
+      <div class="ey" style="text-align:center;">One ask</div>
+      <h2 class="st" style="font-size:26px;text-align:center;max-width:460px;margin:0 auto 10px;">90 minutes with your engineering team.</h2>
+      <p style="font-size:13px;color:var(--m);max-width:420px;line-height:1.7;margin:0 auto;">Not a sales call. A technical deep-dive. Full architecture, data models, and security design — every question answered before any commitment.</p>
+    </div>
+    <div class="cardc" style="max-width:440px;width:100%;padding:18px 22px;text-align:left;">
+      <div style="font-size:10px;color:var(--m);margin-bottom:11px;text-transform:uppercase;letter-spacing:0.1em;font-weight:600;">What we'll cover</div>
+      <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Verity Layer architecture · full technical specification</span></div>
+      <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Integration path, SDK walkthrough, API documentation</span></div>
+      <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Security model, namespace isolation, compliance considerations</span></div>
+      <div class="ci"><svg class="ck" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#00D4FF" stroke-width="0.5"/><polyline points="4,8 7,11 12,5" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Live Q&amp;A — no prepared answers, every question addressed</span></div>
+    </div>
+    <div>
+      <div style="font-size:17px;font-weight:700;color:var(--c);">contact@veritylabs.io</div>
+      <div class="mono" style="font-size:10px;color:var(--m);margin-top:3px;">verity.io · VerityLabs Inc. · Confidential</div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="nav" id="nav">
+  <button class="nb" id="pb" onclick="go(-1)" disabled>← Prev</button>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+    <div class="dots" id="dots"></div>
+    <div class="nl" id="nl">1 / 15</div>
+  </div>
+  <button class="nb" id="nb2" onclick="go(1)">Next →</button>
+</div>
+
+<script>
+let c=1,T=15;
+const de=document.getElementById('dots'),nl=document.getElementById('nl');
+for(let i=1;i<=T;i++){const d=document.createElement('div');d.className='dot'+(i===1?' active':'');d.onclick=()=>gt(i);de.appendChild(d);}
+function gt(n){document.getElementById('slide-'+c).classList.remove('active');de.children[c-1].classList.remove('active');c=n;document.getElementById('slide-'+c).classList.add('active');de.children[c-1].classList.add('active');nl.textContent=c+' / '+T;document.getElementById('pb').disabled=c===1;document.getElementById('nb2').disabled=c===T;}
+function go(d){if(c+d>=1&&c+d<=T)gt(c+d);}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowDown')go(1);if(e.key==='ArrowLeft'||e.key==='ArrowUp')go(-1);});
+</script>
